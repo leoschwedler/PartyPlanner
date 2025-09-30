@@ -1,12 +1,12 @@
 package com.schwedlermobile.PartyPlanner.infra.security;
 
-import com.schwedlermobile.PartyPlanner.infra.mapper.UserRegisterMapper;
+import com.schwedlermobile.PartyPlanner.infra.mapper.UserMapper;
 import com.schwedlermobile.PartyPlanner.infra.persistence.entity.UserEntity;
 import com.schwedlermobile.PartyPlanner.infra.persistence.repository.UserRepository;
-import com.schwedlermobile.PartyPlanner.infra.request.UserLoginRequestDTO;
-import com.schwedlermobile.PartyPlanner.infra.request.UserRegisterRequestDto;
-import com.schwedlermobile.PartyPlanner.infra.response.UserLoginResponseDTO;
-import com.schwedlermobile.PartyPlanner.infra.response.UserRegisterResponseDto;
+import com.schwedlermobile.PartyPlanner.infra.request.user.UserLoginRequestDTO;
+import com.schwedlermobile.PartyPlanner.infra.request.user.UserRegisterRequestDto;
+import com.schwedlermobile.PartyPlanner.infra.response.user.UserLoginResponseDTO;
+import com.schwedlermobile.PartyPlanner.infra.response.user.UserRegisterResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,10 +25,10 @@ public class AuthService {
 
     public UserRegisterResponseDto register(UserRegisterRequestDto request){
         String password = request.password();
-        UserEntity user = UserRegisterMapper.map(request);
+        UserEntity user = UserMapper.map(request);
         user.setPassword(passwordEncoder.encode(password));
         user = repository.save(user);
-        return UserRegisterMapper.map(user);
+        return UserMapper.map(user);
     }
 
     public UserLoginResponseDTO login(UserLoginRequestDTO request){

@@ -1,4 +1,4 @@
-package com.schwedlermobile.PartyPlanner.infra.request;
+package com.schwedlermobile.PartyPlanner.infra.request.user;
 
 import lombok.Builder;
 

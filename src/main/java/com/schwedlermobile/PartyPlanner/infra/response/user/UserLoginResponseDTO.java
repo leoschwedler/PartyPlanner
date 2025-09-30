@@ -1,4 +1,4 @@
-package com.schwedlermobile.PartyPlanner.infra.response;
+package com.schwedlermobile.PartyPlanner.infra.response.user;
 
 import lombok.Builder;
 

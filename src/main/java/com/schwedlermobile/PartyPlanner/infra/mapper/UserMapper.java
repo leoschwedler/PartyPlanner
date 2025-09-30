@@ -2,14 +2,14 @@ package com.schwedlermobile.PartyPlanner.infra.mapper;
 
 import com.schwedlermobile.PartyPlanner.infra.persistence.entity.UserEntity;
 
-import com.schwedlermobile.PartyPlanner.infra.request.UserRegisterRequestDto;
+import com.schwedlermobile.PartyPlanner.infra.request.user.UserRegisterRequestDto;
 
-import com.schwedlermobile.PartyPlanner.infra.response.UserRegisterResponseDto;
+import com.schwedlermobile.PartyPlanner.infra.response.user.UserRegisterResponseDto;
 import lombok.experimental.UtilityClass;
 
 
 @UtilityClass
-public class UserRegisterMapper {
+public class UserMapper {
 
     public static UserEntity map(UserRegisterRequestDto request){
         return UserEntity.builder()

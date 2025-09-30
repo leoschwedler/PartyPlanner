@@ -1,9 +1,9 @@
 package com.schwedlermobile.PartyPlanner.infra.presentation;
 
-import com.schwedlermobile.PartyPlanner.infra.request.UserLoginRequestDTO;
-import com.schwedlermobile.PartyPlanner.infra.request.UserRegisterRequestDto;
-import com.schwedlermobile.PartyPlanner.infra.response.UserLoginResponseDTO;
-import com.schwedlermobile.PartyPlanner.infra.response.UserRegisterResponseDto;
+import com.schwedlermobile.PartyPlanner.infra.request.user.UserLoginRequestDTO;
+import com.schwedlermobile.PartyPlanner.infra.request.user.UserRegisterRequestDto;
+import com.schwedlermobile.PartyPlanner.infra.response.user.UserLoginResponseDTO;
+import com.schwedlermobile.PartyPlanner.infra.response.user.UserRegisterResponseDto;
 import com.schwedlermobile.PartyPlanner.infra.security.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
