@@ -28,6 +28,14 @@ public class ControllerAdvice {
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(IdNotFoundException.class)
+    public ResponseEntity<HashMap<String, Object>> idNotFoundException(IdNotFoundException exception){
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("Detail", exception.getMessage());
+        response.put("Hint", "Please check the ID and try again");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
 
 
 }

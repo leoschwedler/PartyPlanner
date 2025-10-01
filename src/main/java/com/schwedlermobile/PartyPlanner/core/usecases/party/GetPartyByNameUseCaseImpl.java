@@ -3,6 +3,7 @@ package com.schwedlermobile.PartyPlanner.core.usecases.party;
 import com.schwedlermobile.PartyPlanner.core.domain.model.Party;
 import com.schwedlermobile.PartyPlanner.core.exceptions.NameNotFoundException;
 import com.schwedlermobile.PartyPlanner.core.gateway.PartyGateway;
+import org.springframework.cache.annotation.Cacheable;
 
 public class GetPartyByNameUseCaseImpl implements  GetPartyByNameUseCase{
 
@@ -11,6 +12,7 @@ public class GetPartyByNameUseCaseImpl implements  GetPartyByNameUseCase{
     public GetPartyByNameUseCaseImpl(PartyGateway gateway) {
         this.gateway = gateway;
     }
+
 
     @Override
     public Party execute(String name) {

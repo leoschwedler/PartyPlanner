@@ -2,9 +2,10 @@ package com.schwedlermobile.PartyPlanner.core.domain.model;
 
 import com.schwedlermobile.PartyPlanner.core.domain.enums.TypeParty;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Party {
+public class Party implements Serializable {
 
     private Long id;
     private String name;

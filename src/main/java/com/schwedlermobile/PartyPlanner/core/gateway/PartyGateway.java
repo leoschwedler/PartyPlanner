@@ -16,4 +16,14 @@ public interface PartyGateway {
     public Optional<Party> getPartyByName(String name);
 
     public Boolean existForName(String name);
+
+    public boolean existsById(Long id);
+
+    public Optional<Party> findById(Long id);
+
+    public void deleteParty(Long id);
+
+    Party save (Party party);
+
+
 }

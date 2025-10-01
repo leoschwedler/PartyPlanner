@@ -23,5 +23,17 @@ public class BeanConfiguration {
         return new GetPartyByNameUseCaseImpl(gateway);
     }
 
+    @Bean
+    public DeletePartyUseCase DeletePartyUseCase(PartyGateway gateway){
+        return new DeletePartyUseCaseImpl(gateway);
+    }
+
+    @Bean
+    public UpdatePartyUseCase dpdatePartyUseCase(PartyGateway gateway){
+        return new UpdatePartyUseCaseImpl(gateway);
+    }
+
+
+
 
 }
