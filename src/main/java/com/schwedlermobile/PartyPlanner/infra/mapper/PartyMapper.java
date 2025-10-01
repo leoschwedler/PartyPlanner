@@ -3,11 +3,12 @@ package com.schwedlermobile.PartyPlanner.infra.mapper;
 import com.schwedlermobile.PartyPlanner.core.domain.model.Party;
 import com.schwedlermobile.PartyPlanner.infra.persistence.entity.PartyEntity;
 import com.schwedlermobile.PartyPlanner.infra.request.party.PartyCreateRequest;
+import com.schwedlermobile.PartyPlanner.infra.response.party.PartyAllResponse;
 import com.schwedlermobile.PartyPlanner.infra.response.party.PartyCreateResponse;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class PartyCreateMapper {
+public class PartyMapper {
 
     public PartyEntity toEntity(Party party){
         return PartyEntity.builder()
@@ -47,6 +48,18 @@ public class PartyCreateMapper {
 
     public PartyCreateResponse toResponse(Party party){
         return PartyCreateResponse.builder()
+                .name(party.getName())
+                .description(party.getDescription())
+                .location(party.getLocation())
+                .date_party(party.getDate_party())
+                .capacity(party.getCapacity())
+                .typeParty(party.getTypeParty())
+                .build();
+    }
+
+    public PartyAllResponse toResponseAll(Party party){
+        return PartyAllResponse.builder()
+                .id(party.getId())
                 .name(party.getName())
                 .description(party.getDescription())
                 .location(party.getLocation())

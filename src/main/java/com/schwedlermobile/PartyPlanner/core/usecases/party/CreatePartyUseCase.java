@@ -5,8 +5,5 @@ import com.schwedlermobile.PartyPlanner.core.gateway.PartyGateway;
 
 public interface CreatePartyUseCase {
 
-
-
-
     public Party execute(Party party);
 }
