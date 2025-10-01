@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -28,5 +29,18 @@ public class PartyGatewayRepository implements PartyGateway {
     public List<Party> getAllParties() {
         List<PartyEntity>  parties = repository.findAll();
         return parties.stream().map(PartyMapper::EntityToDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Party> getPartyByName(String name) {
+        Optional<PartyEntity> party = repository.findByName(name);
+        return party.map(PartyMapper::EntityToDomain);
+    }
+
+    @Override
+    public Boolean existForName(String name) {
+        return repository.findAll().stream().anyMatch(
+                party -> party.getName().equalsIgnoreCase(name)
+        );
     }
 }

@@ -5,6 +5,7 @@ import com.schwedlermobile.PartyPlanner.infra.persistence.entity.PartyEntity;
 import com.schwedlermobile.PartyPlanner.infra.request.party.PartyCreateRequest;
 import com.schwedlermobile.PartyPlanner.infra.response.party.PartyAllResponse;
 import com.schwedlermobile.PartyPlanner.infra.response.party.PartyCreateResponse;
+import com.schwedlermobile.PartyPlanner.infra.response.party.PartyGetByNameResponse;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -57,8 +58,20 @@ public class PartyMapper {
                 .build();
     }
 
-    public PartyAllResponse toResponseAll(Party party){
+    public PartyAllResponse domainToResponseAll(Party party){
         return PartyAllResponse.builder()
+                .id(party.getId())
+                .name(party.getName())
+                .description(party.getDescription())
+                .location(party.getLocation())
+                .date_party(party.getDate_party())
+                .capacity(party.getCapacity())
+                .typeParty(party.getTypeParty())
+                .build();
+    }
+
+    public PartyGetByNameResponse domainToResponseGetByName(Party party){
+        return PartyGetByNameResponse.builder()
                 .id(party.getId())
                 .name(party.getName())
                 .description(party.getDescription())

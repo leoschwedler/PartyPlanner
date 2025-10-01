@@ -1,10 +1,7 @@
 package com.schwedlermobile.PartyPlanner.infra.beans;
 
 import com.schwedlermobile.PartyPlanner.core.gateway.PartyGateway;
-import com.schwedlermobile.PartyPlanner.core.usecases.party.CreatePartyUseCase;
-import com.schwedlermobile.PartyPlanner.core.usecases.party.CreatePartyUseCaseImpl;
-import com.schwedlermobile.PartyPlanner.core.usecases.party.GetAllPartiesUseCase;
-import com.schwedlermobile.PartyPlanner.core.usecases.party.GetAllPartiesUseCaseImpl;
+import com.schwedlermobile.PartyPlanner.core.usecases.party.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,4 +17,11 @@ public class BeanConfiguration {
     public GetAllPartiesUseCase GetAllPartiesUseCase(PartyGateway gateway){
         return new GetAllPartiesUseCaseImpl(gateway);
     }
+
+    @Bean
+    public GetPartyByNameUseCase GetPartyByNameUseCase(PartyGateway gateway){
+        return new GetPartyByNameUseCaseImpl(gateway);
+    }
+
+
 }
