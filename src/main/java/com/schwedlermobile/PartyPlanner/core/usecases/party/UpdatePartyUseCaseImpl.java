@@ -21,6 +21,6 @@ public class UpdatePartyUseCaseImpl implements UpdatePartyUseCase{
         existingParty.setDate_party(party.getDate_party());
         existingParty.setCapacity(party.getCapacity());
         existingParty.setTypeParty(party.getTypeParty());
-        return gateway.cre(existingParty);
+        return gateway.save(existingParty);
     }
 }

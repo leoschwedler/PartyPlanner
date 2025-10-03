@@ -3,16 +3,26 @@ spring:
     name: PartyPlanner
 
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
   jpa:
     show-sql: true
 
   flyway:
     enabled: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
   cache:
     redis:

@@ -27,6 +27,8 @@ public class SecurityConfig {
                 // Desabilita proteção CSRF (não precisamos em APIs REST stateless)
                 .csrf(csrf -> csrf.disable())
 
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
+
                 // Define que a aplicação NÃO vai manter sessão em servidor (stateless, tudo via token)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
@@ -34,6 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/api/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger/**").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll() // cadastro liberado
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()    // login liberado
                         .anyRequest().authenticated() // todo o resto precisa de autenticação
