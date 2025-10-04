@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v3
 
       # 2️⃣ Configurar Java 17
-      - name: Configure Java
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -24,20 +24,19 @@ jobs:
       - name: Build artifact
         run: mvn clean package
 
-      # 4️⃣ Configurar SSH e deploy
-      - name: Configurar SSH e Deploy
+      # 4️⃣ Copiar .jar e executar na EC2
+      - name: Deploy artifact to EC2
         run: |
           # Criar arquivo da chave privada
           echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
 
-          # Conectar na EC2 e rodar comandos
+          # Copiar o .jar para a EC2
+          scp -i private_key.pem ./target/PartyPlanner-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ec2-user/
+
+          # Executar o .jar em background na EC2
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
-            cd /home/ec2-user &&
-            git pull &&
-            npm install &&
-            pm2 restart all
+            nohup java -jar /home/ec2-user/PartyPlanner-0.0.1-SNAPSHOT.jar > /home/ec2-user/output.log 2>&1 &
           "
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
