@@ -1,49 +1,42 @@
-name: Deploy to EC2
+name: Build and Deploy EC2 by Leozinho
 
 on:
   push:
-    branches:
-      - main   # dispara sempre que der push na branch main
+    branches: [main]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout código
+      # 1️⃣ Puxar código do repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Java 17
+      # 2️⃣ Configurar Java 17
+      - name: Configure Java
         uses: actions/setup-java@v3
         with:
-          distribution: corretto
           java-version: '17'
+          distribution: 'temurin'
 
-      - name: Build com Maven
-        run: mvn clean package -DskipTests
+      # 3️⃣ Build Maven
+      - name: Build artifact
+        run: mvn clean package
 
-      - name: Copiar JAR para EC2
-        env:
-          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
+      # 4️⃣ Configurar SSH e deploy
+      - name: Configurar SSH e Deploy
         run: |
-          echo "$SSH_KEY" > private_key.pem
+          # Criar arquivo da chave privada
+          echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
-          scp -i private_key.pem -o StrictHostKeyChecking=no target/*.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/app.jar
 
-      - name: Reiniciar aplicação na EC2
+          # Conectar na EC2 e rodar comandos
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
+            cd /app &&
+            git pull &&
+            npm install &&
+            pm2 restart all
+          "
         env:
-          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
-        run: |
-          echo "$SSH_KEY" > private_key.pem
-          chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-            # Mata processo anterior (se existir)
-            pkill -f 'java -jar' || true
-
-            # Sobe o novo JAR em background
-            nohup java -jar /home/$EC2_USER/app.jar > app.log 2>&1 &
-          EOF
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
