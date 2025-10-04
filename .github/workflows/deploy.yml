@@ -9,32 +9,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Puxar código do repo
+      # 1️⃣ Checkout repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Configurar Java 17
+      # 2️⃣ Setup Java 17
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # 3️⃣ Build Maven
+      # 3️⃣ Build Maven artifact
       - name: Build artifact
         run: mvn clean package
 
-      # 4️⃣ Copiar .jar e executar na EC2
+      # 4️⃣ Copy .jar and run it on EC2
       - name: Deploy artifact to EC2
         run: |
-          # Criar arquivo da chave privada
+          # Create private key file
           echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
 
-          # Copiar o .jar para a EC2 ignorando verificação do host
+          # Copy the .jar to EC2, ignoring host verification
           scp -i private_key.pem -o StrictHostKeyChecking=no ./target/PartyPlanner-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ec2-user/
-  
-          # Executar o .jar em background na EC2 ignorando verificação do host
+          
+          # Run the .jar in background on EC2, ignoring host verification
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
           nohup java -jar /home/ec2-user/PartyPlanner-0.0.1-SNAPSHOT.jar > /home/ec2-user/output.log 2>&1 &
           "
