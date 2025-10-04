@@ -33,10 +33,11 @@ jobs:
 
           # Conectar na EC2 e rodar comandos
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
-            cd /app &&
+            cd /home/ec2-user &&
             git pull &&
             npm install &&
             pm2 restart all
           "
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
