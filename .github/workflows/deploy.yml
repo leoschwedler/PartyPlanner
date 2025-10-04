@@ -31,12 +31,12 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
 
-          # Copiar o .jar para a EC2
-          scp -i private_key.pem ./target/PartyPlanner-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ec2-user/
-
-          # Executar o .jar em background na EC2
+          # Copiar o .jar para a EC2 ignorando verificação do host
+          scp -i private_key.pem -o StrictHostKeyChecking=no ./target/PartyPlanner-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ec2-user/
+  
+          # Executar o .jar em background na EC2 ignorando verificação do host
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
-            nohup java -jar /home/ec2-user/PartyPlanner-0.0.1-SNAPSHOT.jar > /home/ec2-user/output.log 2>&1 &
+          nohup java -jar /home/ec2-user/PartyPlanner-0.0.1-SNAPSHOT.jar > /home/ec2-user/output.log 2>&1 &
           "
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
