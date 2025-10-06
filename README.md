@@ -1,24 +1,24 @@
 # PartyPlanner 🎉
 
-**PartyPlanner** é um projeto backend em Java que permite criar, gerenciar e buscar festas de forma rápida e escalável, aplicando **Clean Architecture** e boas práticas de desenvolvimento.  
+**PartyPlanner** é um backend em **Java 17 e Spring Boot** que permite criar, gerenciar e buscar festas de forma rápida e escalável, aplicando **Clean Architecture** e boas práticas de desenvolvimento.
 
-A camada de **Core** é pura Java, sem depender de Spring ou qualquer infraestrutura externa, tornando o código mais limpo, testável e modular.  
+A camada de **Core** é **pura Java**, sem depender de Spring ou qualquer infraestrutura externa, tornando o código **limpo, testável e modular**.
 
 ---
 
-## Tecnologias
+## 🛠 Tecnologias
 
 - **Java 17 & Spring Boot**  
-- **PostgreSQL** (desenvolvimento) e **H2** (produção)  
-- **Redis** para cache de parties  
-- **Spring Security** para autenticação e geração de tokens  
-- **JUnit** para testes de integração  
+- **PostgreSQL** (desenvolvimento) e **H2** (teste)  
+- **Redis** para cache de festas  
+- **Spring Security** para autenticação e tokens JWT  
 - **Docker Compose** para orquestrar PostgreSQL e Redis  
-- **Deploy na AWS EC2** via **GitHub Actions**
+- **AWS EC2** para deploy da aplicação  
+- **GitHub Actions** para pipeline de CI/CD  
 
 ---
 
-## Funcionalidades
+## ✨ Funcionalidades
 
 - Criar, editar e deletar festas  
 - Buscar festas por nome  
@@ -29,7 +29,7 @@ A camada de **Core** é pura Java, sem depender de Spring ou qualquer infraestru
 
 ---
 
-## Como rodar o projeto localmente
+## 🚀 Como rodar o projeto localmente
 
 1. Clone o repositório:
 
